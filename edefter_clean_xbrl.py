@@ -4,33 +4,37 @@ from xbrl import XBRLParser
 
 # (tag, name)
 ACCOUNTING_ENTRIES_ATTRS = (
-    ('gl-cor', 'uniqueId'),
+    ('gl-cor', 'uniqueID'),
     ('gl-cor', 'creationDate'),
+    ('gl-cor', 'entriesComment'),
     ('gl-cor', 'periodCoveredStart'),
     ('gl-cor', 'periodCoveredEnd'),
+    ('gl-cor', 'sourceApplication'),
+    ('gl-cor', 'organizationIdentifier'),
+    ('gl-cor', 'businessDescription'),
     ('gl-bus', 'fiscalYearStart'),
     ('gl-bus', 'fiscalYearEnd'),
+    ('gl-cor', 'accountantName'),
+    ('gl-cor', 'accountantEngagementTypeDescription')
+    
 )
 
 ENTRY_HEADER_ATTRS = (
     ('gl-cor', 'enteredBy'),
     ('gl-cor', 'enteredDate'),
     ('gl-cor', 'entryNumber'),
-    ('gl-cor', 'entryComment'),
-    ('gl-bus', 'totalDebit'),
-    ('gl-bus', 'totalCredit'),
     ('gl-cor', 'entryNumberCounter'),
 )
 
 ENTRY_DETAIL_ATTRS = (
     ('gl-cor', 'lineNumber'),
     ('gl-cor', 'lineNumberCounter'),
-    ('gl-cor', 'accountMainID'),
-    ('gl-cor', 'accountMainDescription'),
-    ('gl-cor', 'accountSubDescription'),
-    ('gl-cor', 'accountSubID'),
-    ('gl-cor', 'amount'),
-    ('gl-cor', 'debitCreditCode'),
+    ('gl-cor', 'documentType'),
+    ('gl-cor', 'documentNumber'),
+    ('gl-cor', 'documentReference'),
+    ('gl-cor', 'documentDate'),
+    ('gl-cor', 'documentTypeDescription'),
+    ('gl-cor', 'paymentMethod'),
     ('gl-cor', 'postingDate'),
 )
 

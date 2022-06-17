@@ -11,7 +11,7 @@ import json
 from tkinter import *
 from pathlib import PurePosixPath, Path
 from tkinter import filedialog as fd
-from e_defter_clean_xbrl import clean_xbrl
+from edefter_clean_xbrl import clean_xbrl
 
 class App:
     def __init__(self, root):
@@ -70,10 +70,10 @@ class App:
         canvas.create_line(470, 211, 478, 211, fill="black", width=1)
         canvas.pack()
 
-        # This is for Batch
-        canvas.create_line(675, 180, 675, 240, fill="black", width=1)
-        canvas.create_line(675, 210, 682, 210, fill="black", width=1)
-        canvas.create_line(675, 240, 682, 240, fill="black", width=1)
+        # # This is for Batch
+        # canvas.create_line(675, 180, 675, 240, fill="black", width=1)
+        # canvas.create_line(675, 210, 682, 210, fill="black", width=1)
+        # canvas.create_line(675, 240, 682, 240, fill="black", width=1)
 
         # END of Lines ====================
 
@@ -277,25 +277,25 @@ class App:
         command=lambda: self.parentPressed(self.document_var, [self.documentDate_var], False))
         self.documentDate.place(x=485,y=320,width=115,height=20)
 
-        self.batch_var = tk.IntVar()
-        self.batch_ID_var = tk.IntVar()
-        self.batch_desc_var = tk.IntVar()
-        batchChidlren = [self.batch_ID_var, self.batch_desc_var]
-        ft = tkFont.Font(family='Times',size=10)
-        self.batch=tk.Checkbutton(root, variable=self.batch_var, font=ft, fg="#000000", 
-        justify="center", text="Batch", offvalue="0", onvalue="1", 
-        command=lambda: self.parentPressed(self.batch_var, batchChidlren, True))
-        self.batch.place(x=640,y=170,width=110,height=20)
+        # self.batch_var = tk.IntVar()
+        # self.batch_ID_var = tk.IntVar()
+        # self.batch_desc_var = tk.IntVar()
+        # batchChidlren = [self.batch_ID_var, self.batch_desc_var]
+        # ft = tkFont.Font(family='Times',size=10)
+        # self.batch=tk.Checkbutton(root, variable=self.batch_var, font=ft, fg="#000000", 
+        # justify="center", text="Batch", offvalue="0", onvalue="1", 
+        # command=lambda: self.parentPressed(self.batch_var, batchChidlren, True))
+        # self.batch.place(x=640,y=170,width=110,height=20)
         
-        self.batch_ID=tk.Checkbutton(root, variable=self.batch_ID_var, font=ft, fg="#000000", 
-        justify="center", text="Batch ID", offvalue="0", onvalue="1", 
-        command=lambda: self.parentPressed(self.batch_var, [self.batch_ID_var], False))
-        self.batch_ID.place(x=685,y=200,width=68,height=20)
+        # self.batch_ID=tk.Checkbutton(root, variable=self.batch_ID_var, font=ft, fg="#000000", 
+        # justify="center", text="Batch ID", offvalue="0", onvalue="1", 
+        # command=lambda: self.parentPressed(self.batch_var, [self.batch_ID_var], False))
+        # self.batch_ID.place(x=685,y=200,width=68,height=20)
 
-        self.batch_desc=tk.Checkbutton(root, variable=self.batch_desc_var, font=ft, fg="#000000", 
-        justify="center", text="Batch Description", offvalue="0", onvalue="1", 
-        command=lambda: self.parentPressed(self.batch_var, [self.batch_desc_var], False))
-        self.batch_desc.place(x=685,y=230,width=117,height=20)
+        # self.batch_desc=tk.Checkbutton(root, variable=self.batch_desc_var, font=ft, fg="#000000", 
+        # justify="center", text="Batch Description", offvalue="0", onvalue="1", 
+        # command=lambda: self.parentPressed(self.batch_var, [self.batch_desc_var], False))
+        # self.batch_desc.place(x=685,y=230,width=117,height=20)
 
         self.text = Text(root, state='disabled', width=40, height=5, wrap=WORD)
         self.text.place(x = 450, y = 390)
@@ -307,8 +307,11 @@ class App:
         command=lambda: self.parentPressed(self.selectAll_var, listOfAllChildren_var, True))
         self.selectAll.place(x=260,y=510,width=130,height=20)
 
+        self.statusLabel = Label(root, text = "Status:\nInactive\n(Import a file to start)", font=("Arial", 18))
+        self.statusLabel.place(x = 230, y = 300)
+
         selectFile_button = Button(root, text = "Choose File", command=self.selectFile).place(x = 530, y = 480)
-        ok_button = Button(root, text = "OK", command=lambda: self.okButtonCommand(listOfAllChildren)).place(x = 670, y = 480)
+        ok_button = Button(root, text = "OK", command=lambda: self.okButtonCommand(listOfAllChildren, root)).place(x = 670, y = 480)
 
         listOfAllChildren.append((self.organizationIdentifier_var, 1, 'organizationIdentifier'))
         listOfAllChildren.append((self.businessDescription_var, 2, 'businessDescription'))
@@ -316,15 +319,15 @@ class App:
         listOfAllChildren.append((self.fiscalYear_end_var, 4, 'fiscalYearEnd'))
         listOfAllChildren.append((self.accountant_name_var, 5, 'accountantName'))
         listOfAllChildren.append((self.accountant_type_desc_var, 6, 'accountantEngagementTypeDescription'))
-        listOfAllChildren.append((self.batch_ID_var, 7, 'batchID'))
-        listOfAllChildren.append((self.batch_desc_var, 8, 'batchDescription'))
+        # listOfAllChildren.append((self.batch_ID_var, 7, 'batchID'))
+        # listOfAllChildren.append((self.batch_desc_var, 8, 'batchDescription'))
         listOfAllChildren.append((self.uniqueID_var, 9, 'uniqueID'))
         listOfAllChildren.append((self.creationDate_var, 10, 'creationDate'))
         listOfAllChildren.append((self.entries_comment_var, 11, 'entriesComment'))
         listOfAllChildren.append((self.coveredDate_start_var, 12, 'periodCoveredStart')) # The 1 here is column number in the cleaned version of the XML)
         listOfAllChildren.append((self.coveredDate_end_var, 13, 'periodCoveredEnd'))
         listOfAllChildren.append((self.sourceApplication_var, 14, 'sourceApplication'))
-        listOfAllChildren.append((self.EnteredBy_var, 15, 'EnteredBy'))
+        listOfAllChildren.append((self.EnteredBy_var, 15, 'enteredBy'))
         listOfAllChildren.append((self.enteredDate_var, 16, 'enteredDate'))
         listOfAllChildren.append((self.entry_number_var, 17, 'entryNumber'))
         listOfAllChildren.append((self.documentType_var, 18, 'documentType'))
@@ -396,68 +399,31 @@ class App:
             self.fileCounter += 1
         self.text.configure(state='disabled')    
 
-    def okButtonCommand(self, childrenList):
+    def okButtonCommand(self, childrenList, root):
         listOfChosenColumns = [child[2] for child in childrenList if child[0].get() == 1]
-        listOfNotChosenIndices = [child[2] for child in childrenList if child[0].get() == 0]
-        print(listOfNotChosenIndices)
-        # listOfAllColumns = [child[2] for child in childrenList]
-        # listOfNotChosenColumns = [x for x in listOfAllColumns if x not in listOfChosenColumns]
-        # st = time.time()
-        # clean_xbrl('7420300220-202001-Y-000001.xml')
-        with open('entries.json', encoding='utf-8') as fh:
-            data = json.load(fh)
-            df = pd.DataFrame(data)
-            # takes a list of columnNames to remove
-            # df.drop(df.columns[listOfNotChosenIndices], axis = 1, inplace = True)
-            
-            df.drop(['uniqueID'], axis = 1, inplace = True)
-            print(df)
-            
-            # df1 = df[~df.index.isin(1, 2)]
-            # print(df.iloc[1])
-            return
-        #     # for element in data:
-        #     #     for field in listOfNotChosenColumns:
-        #     #         del element[field]
+        listOfNotChosenColumns = [child[2] for child in childrenList if child[0].get() == 0]
 
-        # #         # print(element)
-        # et = time.time()
-        # # # get the execution time
-        # elapsed_time = et - st
-        # print('Time Elapsed', elapsed_time)
-        # return
-        # # print(data[0])
-        # xml = dict2xml(data)
-        # print(xml)
-        # xmlfile = open("filteredData.xml", "w")
-        # xmlfile.write(xml)
-        # xmlfile.close()
-        # return
-        # self.fileList = ['D:/Bilkent Uni/MED_IDEA Internship/e-defter Module/Code/Sample Data/7420300220-202001-Y-000001.xml']
-        for filePath in self.fileList:
-            st = time.time()
-            # clean_xbrl(filePath)
-            
-            # for i in data:
-            #     # do nothing
-            #     pass
-            
-            
-            # return
-            
-            filteredData = self.xmlToDataFrame(filePath, listOfChosenColumns)
-            et = time.time()
-            # get the execution time
-            elapsed_time = et - st
-            print('Time Elapsed', elapsed_time)
+        for filePath in self.fileList:    
+            self.statusLabel.configure(text = 'Status:\nCleaning XML File\nThis may take\nup to a minute')
+            root.update()
+
+            cleanedList = clean_xbrl(filePath)          
+            filteredData = pd.DataFrame(cleanedList)
+
+            self.statusLabel.configure(text = 'Status:\nRemoving Unselected Columns')
+            root.update()
+
+            filteredData.drop(listOfNotChosenColumns, axis = 1, inplace = True)
             # conversion of the DataFrame to a cleaned/filtered XML
             fileName = Path(filePath).stem
             fileName_clean = fileName + 'clean.xml'
+
+            self.statusLabel.configure(text = 'Status:\nExporting To IDEA')
+            root.update()
+
             filteredData.to_xml(fileName_clean, index = False)
             filePath_clean = os.getcwd() + '\\' + fileName_clean
-            print('Starting Importing')
-            self.importXMLToIdea(filePath = filePath_clean, fileName = fileName)
-            print('Finished Importing')
+            self.importXMLToIdea(filePath = filePath_clean, fileName = fileName, root = root)
             
         root.destroy()
 
@@ -495,7 +461,7 @@ class App:
     
     # filePath is the path to the XML file that holds the cleaned/filtered data
     # fileName is the name you want to be given to the new .IMD DB
-    def importXMLToIdea (self, filePath = None, fileName = None):
+    def importXMLToIdea (self, filePath = None, fileName = None, root = None):
         try:
             idea = win32ComClient.Dispatch(dispatch="Idea.IdeaClient")
             task = idea.GetImportTask ("ImportXML")
@@ -508,6 +474,8 @@ class App:
             # delete the temp cleaned XML file
             os.remove(filePath)
         finally:
+            self.statusLabel.configure(text = 'Status:\nAn Error Occured\nWhile Exporting')
+            root.update()
             task = None
             db = None
             idea = None
