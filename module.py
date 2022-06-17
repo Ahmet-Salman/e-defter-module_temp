@@ -70,11 +70,6 @@ class App:
         canvas.create_line(470, 211, 478, 211, fill="black", width=1)
         canvas.pack()
 
-        # # This is for Batch
-        # canvas.create_line(675, 180, 675, 240, fill="black", width=1)
-        # canvas.create_line(675, 210, 682, 210, fill="black", width=1)
-        # canvas.create_line(675, 240, 682, 240, fill="black", width=1)
-
         # END of Lines ====================
 
         self.coveredDate_var = tk.IntVar()
@@ -277,26 +272,6 @@ class App:
         command=lambda: self.parentPressed(self.document_var, [self.documentDate_var], False))
         self.documentDate.place(x=485,y=320,width=115,height=20)
 
-        # self.batch_var = tk.IntVar()
-        # self.batch_ID_var = tk.IntVar()
-        # self.batch_desc_var = tk.IntVar()
-        # batchChidlren = [self.batch_ID_var, self.batch_desc_var]
-        # ft = tkFont.Font(family='Times',size=10)
-        # self.batch=tk.Checkbutton(root, variable=self.batch_var, font=ft, fg="#000000", 
-        # justify="center", text="Batch", offvalue="0", onvalue="1", 
-        # command=lambda: self.parentPressed(self.batch_var, batchChidlren, True))
-        # self.batch.place(x=640,y=170,width=110,height=20)
-        
-        # self.batch_ID=tk.Checkbutton(root, variable=self.batch_ID_var, font=ft, fg="#000000", 
-        # justify="center", text="Batch ID", offvalue="0", onvalue="1", 
-        # command=lambda: self.parentPressed(self.batch_var, [self.batch_ID_var], False))
-        # self.batch_ID.place(x=685,y=200,width=68,height=20)
-
-        # self.batch_desc=tk.Checkbutton(root, variable=self.batch_desc_var, font=ft, fg="#000000", 
-        # justify="center", text="Batch Description", offvalue="0", onvalue="1", 
-        # command=lambda: self.parentPressed(self.batch_var, [self.batch_desc_var], False))
-        # self.batch_desc.place(x=685,y=230,width=117,height=20)
-
         self.text = Text(root, state='disabled', width=40, height=5, wrap=WORD)
         self.text.place(x = 450, y = 390)
 
@@ -319,8 +294,6 @@ class App:
         listOfAllChildren.append((self.fiscalYear_end_var, 4, 'fiscalYearEnd'))
         listOfAllChildren.append((self.accountant_name_var, 5, 'accountantName'))
         listOfAllChildren.append((self.accountant_type_desc_var, 6, 'accountantEngagementTypeDescription'))
-        # listOfAllChildren.append((self.batch_ID_var, 7, 'batchID'))
-        # listOfAllChildren.append((self.batch_desc_var, 8, 'batchDescription'))
         listOfAllChildren.append((self.uniqueID_var, 9, 'uniqueID'))
         listOfAllChildren.append((self.creationDate_var, 10, 'creationDate'))
         listOfAllChildren.append((self.entries_comment_var, 11, 'entriesComment'))
@@ -426,38 +399,6 @@ class App:
             self.importXMLToIdea(filePath = filePath_clean, fileName = fileName, root = root)
             
         root.destroy()
-
-    def xmlToDataFrame (self, filePath, listOfChosenColumns):
-        tree = ET.parse(filePath)
-        root = tree.getroot()
-        limit = 5
-        counter = 0
-        filteredData = pd.DataFrame()
-        isThereNone = True
-        dataRow = {column : None for column in listOfChosenColumns}
-        print ('Started Parsing')
-        st = time.time()
-        for child in root.iter():
-            if limit == counter:
-                break
-            filteredChildtag = child.tag.split('}', 1)[1]
-
-            # entryDetail indicates the beginning of a new record
-            # isThereNone makes sure that no values in the dictionary are None
-            # i.e. ensures all the fields are populated
-            if (filteredChildtag == "entryDetail") and not isThereNone:
-                # we have the data row here, we need to append it to a DataFrame
-                filteredData = filteredData.append(dataRow, ignore_index=True)
-                # counter += 1 # this counter is for testing purposes, it limits the number of rows in the DF
-            if filteredChildtag in listOfChosenColumns:
-                dataRow[filteredChildtag] = child.text
-                isThereNone = not all(dataRow.values()) # returns false if not elements are None, returns true if there is 1 or more None values
-        print ('Finished Parsing')
-        et = time.time()
-        # get the execution time
-        elapsed_time = et - st
-        print('Time Elapsed', elapsed_time)
-        return filteredData
     
     # filePath is the path to the XML file that holds the cleaned/filtered data
     # fileName is the name you want to be given to the new .IMD DB
